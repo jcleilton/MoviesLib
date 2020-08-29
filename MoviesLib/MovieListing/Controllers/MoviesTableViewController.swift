@@ -10,11 +10,16 @@ import UIKit
 
 class MoviesTableViewController: UITableViewController {
 
-    var movies: [Movie] = []
+    let moviesManager = MoviesManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadMovies()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let movieVisualizationViewController = segue.destination as? MovieVisualizationViewController,
+            let indexPath = tableView.indexPathForSelectedRow else {return}
+        movieVisualizationViewController.movie = moviesManager.getMoviesAt(indexPath)
     }
 
     // MARK: - Table view data source
@@ -23,35 +28,18 @@ class MoviesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
-    }
-    
-    private func loadMovies() {
-        guard let jsonURL = Bundle.main.url(forResource: "movies", withExtension: "json") else {return}
-        do {
-            let jsonData = try Data(contentsOf: jsonURL)
-            let jsonDecoder = JSONDecoder()
-            //jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            //jsonDecoder.dateDecodingStrategy = .iso8601
-            movies = try jsonDecoder.decode([Movie].self, from: jsonData)
-            tableView.reloadData()
-        } catch {
-            print(error)
-        }
+        return moviesManager.totalMovies
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        let movie = movies[indexPath.row]
-        
-        cell.textLabel?.text = movie.title
-        cell.detailTextLabel?.text = movie.duration
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? MovieTableViewCell else {
+            return UITableViewCell()
+        }
+        let movie = moviesManager.getMoviesAt(indexPath)
+        cell.configure(with: movie)
         return cell
     }
-
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
