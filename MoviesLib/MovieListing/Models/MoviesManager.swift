@@ -6,29 +6,46 @@
 //  Copyright © 2020 DevBoost. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
-struct MoviesManager {
+class MoviesManager {
     
-    private let movies: [Movie] = {
-        guard let jsonURL = Bundle.main.url(forResource: "movies", withExtension: "json") else {return []}
+    let context: NSManagedObjectContext
+    weak var delegate: NSFetchedResultsControllerDelegate?
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
+    }
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<Movie> = {
+        let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        //fetchRequest.fetchLimit = 50
+        //let movieName = "Matrix"
+        //let predicate = NSPredicate(format: "title contains [c] %@", movieName)
+        //fetchRequest.predicate = predicate
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = delegate
+        
+        return fetchedResultsController
+    }()
+    
+    func performFetch() {
         do {
-            let jsonData = try Data(contentsOf: jsonURL)
-            let jsonDecoder = JSONDecoder()
-            //jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            //jsonDecoder.dateDecodingStrategy = .iso8601
-            return try jsonDecoder.decode([Movie].self, from: jsonData)
+            try fetchedResultsController.performFetch()
         } catch {
             print(error)
         }
-        return []
-    }()
-    
-    var totalMovies: Int {
-        movies.count
     }
     
-    func getMoviesAt(_ indexPath: IndexPath) -> Movie {
-        movies[indexPath.row]
+    var totalMovies: Int {
+        fetchedResultsController.fetchedObjects?.count ?? 0
+    }
+    
+    func getMovieAt(_ indexPath: IndexPath) -> Movie {
+        fetchedResultsController.object(at: indexPath)
     }
 }

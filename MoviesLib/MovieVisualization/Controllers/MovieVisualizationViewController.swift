@@ -33,14 +33,10 @@ class MovieVisualizationViewController: UIViewController {
     
     func setupView() {
         guard let movie = movie else {return}
-        if let image = movie.image {
-            imageViewPoster.image = UIImage(named: image)
-        } else {
-            imageViewPoster.image = nil
-        }
+        imageViewPoster.image = movie.poster
         labelTitle.text = movie.title
         labelRating.text = movie.ratingFormatted
-        labelCategories.text = movie.categories
+//        labelCategories.text = movie.categories
         labelDuration.text = movie.duration
         textViewSummary.text = movie.summary
     }

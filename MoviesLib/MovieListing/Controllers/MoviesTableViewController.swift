@@ -7,19 +7,41 @@
 //
 
 import UIKit
+import CoreData
 
 class MoviesTableViewController: UITableViewController {
 
-    let moviesManager = MoviesManager()
+    // MARK: - IBOutlets
+    @IBOutlet var viewNoMovies: UIView!
     
+    // MARK: - Properties
+    let label: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 22))
+        label.text = "Sem filmes cadastrados"
+        label.textAlignment = .center
+        label.font = UIFont.italicSystemFont(ofSize: 16.0)
+        return label
+    }()
+    lazy var moviesManager: MoviesManager = {[weak self] in
+        let movieManager = MoviesManager(context: context)
+        movieManager.delegate = self
+        return movieManager
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadMovies()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let movieVisualizationViewController = segue.destination as? MovieVisualizationViewController,
             let indexPath = tableView.indexPathForSelectedRow else {return}
-        movieVisualizationViewController.movie = moviesManager.getMoviesAt(indexPath)
+        movieVisualizationViewController.movie = moviesManager.getMovieAt(indexPath)
+    }
+    
+    // MARK: - Methods
+    private func loadMovies() {
+        moviesManager.performFetch()
     }
 
     // MARK: - Table view data source
@@ -28,6 +50,7 @@ class MoviesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.backgroundView = moviesManager.totalMovies == 0 ? label : nil
         return moviesManager.totalMovies
     }
 
@@ -35,54 +58,31 @@ class MoviesTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
         }
-        let movie = moviesManager.getMoviesAt(indexPath)
+        let movie = moviesManager.getMovieAt(indexPath)
         cell.configure(with: movie)
         return cell
     }
+
+}
+
+extension MoviesTableViewController: NSFetchedResultsControllerDelegate {
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .delete:
+            print("Código para excluir o filme da tabela")
+        case .move:
+            print("Código para atualizar a posição do filme da tabela")
+        case .update:
+            print("Código para atualizar o filme da tabela")
+        case .insert:
+            print("Código para inserir o filme da tabela")
+        @unknown default:
+            print("Cenário desconhecido")
+        }
+    }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.reloadData()
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
