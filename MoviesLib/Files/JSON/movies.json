@@ -1,5 +1,6 @@
 [
 	{
+        "title": "Avengers: Infinity War",
 		"categories": "Action, Adventure, Fantasy",
 		"duration": "2h 29min",
 		"rating": 8.8,
@@ -15,6 +16,7 @@
 		"image": "deadpool2"
 	},
 	{
+        "title": "Han Solo",
 		"categories": " Action, Adventure, Fantasy ",
 		"duration": "2h 15min",
 		"rating": 7.2,
