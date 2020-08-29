@@ -8,15 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
-    // TODO: Remover a variante da imagem
+class MovieVisualizationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
-
