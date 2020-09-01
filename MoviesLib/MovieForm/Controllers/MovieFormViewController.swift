@@ -17,6 +17,7 @@ class MovieFormViewController: UIViewController {
     @IBOutlet weak var labelCategories: UILabel!
     @IBOutlet weak var imageViewPoster: UIImageView!
     @IBOutlet weak var textViewSummary: UITextView!
+    @IBOutlet weak var buttonSave: UIButton!
     
     // MARK: - Properties
     var movie: Movie?
@@ -29,6 +30,10 @@ class MovieFormViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func selectImage(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.5) {[weak self] in
+            self?.textFieldTitle.isHidden.toggle()
+            self?.imageViewPoster.isHidden.toggle()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -63,6 +68,7 @@ class MovieFormViewController: UIViewController {
             textFieldRating.text = "\(movie.rating)"
             textFieldDuration.text = movie.duration
             textViewSummary.text = movie.summary
+            buttonSave.setTitle("Alterar", for: .normal)
             if let data = movie.image {
                 imageViewPoster.image = UIImage(data: data)
             }

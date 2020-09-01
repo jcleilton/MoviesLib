@@ -40,5 +40,10 @@ class MovieVisualizationViewController: UIViewController {
         labelDuration.text = movie.duration
         textViewSummary.text = movie.summary
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let movieFormViewController = segue.destination as? MovieFormViewController
+        movieFormViewController?.movie = movie
+    }
 }
 
