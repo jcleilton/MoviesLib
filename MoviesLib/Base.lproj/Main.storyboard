@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6bf-i4-xDQ">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -173,6 +173,9 @@
                                                                     <constraint firstAttribute="width" constant="26" id="KDC-vA-mbz"/>
                                                                 </constraints>
                                                                 <color key="tintColor" name="Main"/>
+                                                                <connections>
+                                                                    <segue destination="zlh-Oy-SuG" kind="show" id="eiB-Lk-S2z"/>
+                                                                </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categorias" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77d-2N-mvV">
                                                                 <rect key="frame" x="35" y="0.0" width="300" height="23.666666666666668"/>
@@ -269,11 +272,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ENx-eX-yrZ"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Cadastro de Filme" largeTitleDisplayMode="never" id="jM9-eZ-YhZ"/>
+                    <navigationItem key="navigationItem" title="Cadastro de Filme" largeTitleDisplayMode="never" id="jM9-eZ-YhZ">
+                        <barButtonItem key="backBarButtonItem" title=" " id="fg1-xk-1Qe"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="buttonSave" destination="Of9-sk-dfV" id="ba2-Mm-GFt"/>
                         <outlet property="imageViewPoster" destination="Sxz-Gr-1q6" id="2MR-2D-Kxy"/>
                         <outlet property="labelCategories" destination="77d-2N-mvV" id="LVI-Dd-6qf"/>
+                        <outlet property="scrollView" destination="8Zu-WT-wfs" id="Age-mg-BRu"/>
                         <outlet property="textFieldDuration" destination="Mzp-SX-wli" id="U2V-sb-rJ1"/>
                         <outlet property="textFieldRating" destination="PeM-6Y-bHN" id="RdZ-Rn-W2X"/>
                         <outlet property="textFieldTitle" destination="K23-2b-a4v" id="hB3-by-TVO"/>
@@ -283,6 +289,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oeS-4c-cEp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1048.8" y="-276.35467980295567"/>
+        </scene>
+        <!--Categorias-->
+        <scene sceneID="kTN-Aw-yZR">
+            <objects>
+                <tableViewController id="zlh-Oy-SuG" customClass="CategoriesViewController" customModule="MoviesLib" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="y6h-Q0-yfc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="v3B-pD-jIU">
+                            <rect key="frame" x="0.0" y="99.666667938232422" width="375" height="2"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="FMF-pO-iAi" style="IBUITableViewCellStyleDefault" id="t04-G5-XFC">
+                                <rect key="frame" x="0.0" y="28" width="375" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t04-G5-XFC" id="WUy-2Y-lIx">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FMF-pO-iAi">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zlh-Oy-SuG" id="1bJ-xp-Vw0"/>
+                            <outlet property="delegate" destination="zlh-Oy-SuG" id="kzq-UH-b0X"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categorias" id="Pdo-qO-iHc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="16t-PV-m2l">
+                            <connections>
+                                <action selector="createCategory:" destination="zlh-Oy-SuG" id="byx-tH-G6B"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="anr-7n-kWa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1877.5999999999999" y="-276.35467980295567"/>
         </scene>
         <!--Movie Visualization View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -499,7 +554,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ryh-n6-f5F"/>
+        <segue reference="4jC-5g-gWl"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="gradient" width="600" height="120"/>

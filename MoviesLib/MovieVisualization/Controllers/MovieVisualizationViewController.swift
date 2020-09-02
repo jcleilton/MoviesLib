@@ -36,7 +36,7 @@ class MovieVisualizationViewController: UIViewController {
         imageViewPoster.image = movie.poster
         labelTitle.text = movie.title
         labelRating.text = movie.ratingFormatted
-//        labelCategories.text = movie.categories
+        labelCategories.text = (movie.categories as? Set<Category>)?.compactMap({$0.name}).sorted().joined(separator: " | ")
         labelDuration.text = movie.duration
         textViewSummary.text = movie.summary
     }
