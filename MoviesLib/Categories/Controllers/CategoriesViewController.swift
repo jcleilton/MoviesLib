@@ -124,7 +124,11 @@ class CategoriesViewController: UITableViewController {
             let category = self.categories[indexPath.row]
             
             self.context.delete(category)
-            try? self.context.save()
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
             self.categories.remove(at: indexPath.row)
             self.selectedCategories.remove(category)
             tableView.deleteRows(at: [indexPath], with: .automatic)

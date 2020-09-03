@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		224893BC24F9B87F0064F60B /* movies.json in Resources */ = {isa = PBXBuildFile; fileRef = 224893BB24F9B87F0064F60B /* movies.json */; };
 		224893CD24F9D1CF0064F60B /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224893CC24F9D1CF0064F60B /* MoviesTableViewController.swift */; };
+		2258575B25006B7B00A7A5BD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2258575A25006B7B00A7A5BD /* MapViewController.swift */; };
 		22A1128824FF0A35009220DD /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1128724FF0A35009220DD /* CategoriesViewController.swift */; };
 		22CBBCF624FA8290006F7E2F /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CBBCF524FA8290006F7E2F /* MovieTableViewCell.swift */; };
 		22CBBCF824FA94F0006F7E2F /* MoviesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CBBCF724FA94F0006F7E2F /* MoviesManager.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		224893BB24F9B87F0064F60B /* movies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = movies.json; sourceTree = "<group>"; };
 		224893CC24F9D1CF0064F60B /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
+		2258575A25006B7B00A7A5BD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		22A1128724FF0A35009220DD /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		22CBBCF524FA8290006F7E2F /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		22CBBCF724FA94F0006F7E2F /* MoviesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesManager.swift; sourceTree = "<group>"; };
@@ -151,6 +153,22 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		2258575825006B6300A7A5BD /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				2258575925006B6E00A7A5BD /* Controller */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		2258575925006B6E00A7A5BD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2258575A25006B7B00A7A5BD /* MapViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		22A1128524FF0A18009220DD /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +245,7 @@
 		22EF1FA424F7172800DE3A53 /* MoviesLib */ = {
 			isa = PBXGroup;
 			children = (
+				2258575825006B6300A7A5BD /* Map */,
 				22CBBD2424FAD82B006F7E2F /* MovieForm */,
 				224893C224F9BA420064F60B /* Main */,
 				224893C824F9D1830064F60B /* MovieListing */,
@@ -315,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2258575B25006B7B00A7A5BD /* MapViewController.swift in Sources */,
 				22CBBD1E24FAA586006F7E2F /* MoviesLib.xcdatamodeld in Sources */,
 				22CBBCF624FA8290006F7E2F /* MovieTableViewCell.swift in Sources */,
 				224893CD24F9D1CF0064F60B /* MoviesTableViewController.swift in Sources */,
