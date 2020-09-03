@@ -62,6 +62,16 @@ class MoviesTableViewController: UITableViewController {
         cell.configure(with: movie)
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            let movie = moviesManager.getMovieAt(indexPath)
+            context.delete(movie)
+            try? context.save()
+        }
+        
+    }
 
 }
 

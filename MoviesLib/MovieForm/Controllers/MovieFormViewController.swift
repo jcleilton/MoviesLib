@@ -58,10 +58,29 @@ class MovieFormViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func selectImage(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.5) {[weak self] in
-            self?.textFieldTitle.isHidden.toggle()
-            self?.imageViewPoster.isHidden.toggle()
+        let alert = UIAlertController(title: "Selecionar poster", message: "De onde você deseja escolher o pôster?", preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Câmera", style: .default) { (_) in
+                self.selectPictureFrom(.camera)
+            }
+            alert.addAction(cameraAction)
         }
+        
+        let libraryAction = UIAlertAction(title: "Biblioteca de fotos", style: .default) { (_) in
+            self.selectPictureFrom(.savedPhotosAlbum)
+        }
+        alert.addAction(libraryAction)
+        
+        let photosAction = UIAlertAction(title: "Álbum de fotos", style: .default) { (_) in
+            self.selectPictureFrom(.photoLibrary)
+        }
+        alert.addAction(photosAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -130,10 +149,49 @@ class MovieFormViewController: UIViewController {
             }
         }
     }
+    
+    private func selectPictureFrom(_ sourceType: UIImagePickerController.SourceType) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = sourceType
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    private func resizeImage(_ image: UIImage, withScaleFactor scaleFactor: CGFloat) {
+        
+        let newSize = CGSize(width: image.size.width * scaleFactor, height: image.size.height * scaleFactor)
+        
+        DispatchQueue.global(qos: .background).async {[weak imageViewPoster] in
+            let imageRenderer = UIGraphicsImageRenderer(size: newSize)
+            let resizedImage = imageRenderer.image { (_) in
+                image.draw(in: CGRect(origin: .zero, size: newSize))
+            }
+            DispatchQueue.main.async {
+                imageViewPoster?.image = resizedImage
+            }
+        }
+        
+    }
 }
 
 extension MovieFormViewController: CategoriesDelegate {
     func setSelectedCategories(_ categories: Set<Category>) {
         selectedCategories = categories
+    }
+}
+
+extension MovieFormViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    /*
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    */
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
+            resizeImage(image, withScaleFactor: 0.05)
+        }
+        dismiss(animated: true, completion: nil)
     }
 }
